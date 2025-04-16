@@ -1,1 +1,11 @@
-
+---
+- name: Create PV
+  hosts: 10.178.73.51
+  tasks:
+    - name: create blank PV
+      kubevirt_pvc:
+        name: pvc-ansible
+        namespace: default
+        size: 10Gi
+        access_modes:
+          - ReadWriteOnce
