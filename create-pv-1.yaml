@@ -1,7 +1,6 @@
 ---
 - name: Create PVC for KubeVirt
-  hosts: localhost
-  connection: local
+  hosts: 10.178.73.51
   tasks:
     - name: Create blank PVC
       kubernetes.core.k8s:
