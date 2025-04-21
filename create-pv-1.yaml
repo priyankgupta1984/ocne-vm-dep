@@ -1,0 +1,21 @@
+---
+- name: Create PVC for KubeVirt
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Create blank PVC
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: PersistentVolumeClaim
+          metadata:
+            name: pvc-ansible
+            namespace: default
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 10Gi
+            storageClassName: rook-cephfs
