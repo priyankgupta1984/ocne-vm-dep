@@ -1,11 +1,24 @@
----
-- name: Create PV
+- name: Create PVC for KubeVirt
   hosts: 10.178.73.51
+  vars:
+    ansible_python_interpreter: /usr/bin/python3.11
+  collections:
+    - kubernetes.core
   tasks:
-    - name: create blank PV
-      kubevirt_pvc:
-        name: pvc-ansible
-        namespace: default
-        size: 10Gi
-        access_modes:
-          - ReadWriteOnce
+    - name: Create blank PVC
+      kubernetes.core.k8s:
+        state: present
+        kubeconfig: /root/.kube/kubeconfig.odscocne
+        definition:
+          apiVersion: v1
+          kind: PersistentVolumeClaim
+          metadata:
+            name: santosh-ansible
+            namespace: default
+          spec:
+            accessModes:
+              - ReadWriteMany
+            resources:
+              requests:
+                storage: 10Gi
+            storageClassName: rook-cephfs
