@@ -6,19 +6,11 @@
     - kubernetes.core
   tasks:
     - name: Create blank PVC
-      kubernetes.core.k8s:
+      kubevirt_pvc:
         state: present
         kubeconfig: /root/.kube/kubeconfig.odscocne
-        definition:
-          apiVersion: v1
-          kind: PersistentVolumeClaim
-          metadata:
-            name: santosh-ansible
-            namespace: default
-          spec:
-            accessModes:
-              - ReadWriteMany
-            resources:
-              requests:
-                storage: 10Gi
-            storageClassName: rook-cephfs
+        name: test-pvc-ans
+        namespace: default
+        size: 100Mi
+        accessModes:
+          - ReadWriteMany
