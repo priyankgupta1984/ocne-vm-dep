@@ -3,10 +3,10 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3.11
   collections:
-    - kubernetes.core
+    - kubervirt.core
   tasks:
     - name: Create blank PVC
-      kubernetes.core.k8s:
+      kubervirt.core.kubevirt_pvc:
         state: present
         kubeconfig: /root/.kube/kubeconfig.odscocne
         name: test-pvc-ans
