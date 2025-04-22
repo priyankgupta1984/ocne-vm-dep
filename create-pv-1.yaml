@@ -17,7 +17,7 @@
             namespace: default
           spec:
             accessModes:
-              - ReadWrite
+              - ReadWriteMany
             resources:
               requests:
                 storage: 10Gi
