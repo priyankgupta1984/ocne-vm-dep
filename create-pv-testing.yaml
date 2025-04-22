@@ -12,5 +12,5 @@
         name: test-pvc-ans
         namespace: default
         size: 100Mi
-        accessModes:
+        access_modes:
           - ReadWriteMany
