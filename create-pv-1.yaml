@@ -1,10 +1,12 @@
----
 - name: Create PVC for KubeVirt
   hosts: 10.178.73.51
+  vars:
+    ansible_python_interpreter: /usr/bin/python3.11
   tasks:
     - name: Create blank PVC
       kubernetes.core.k8s:
         state: present
+        kubeconfig: /root/.kube/config
         definition:
           apiVersion: v1
           kind: PersistentVolumeClaim
