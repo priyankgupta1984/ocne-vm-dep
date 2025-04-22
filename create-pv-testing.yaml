@@ -6,7 +6,7 @@
     - kubernetes.core
   tasks:
     - name: Create blank PVC
-      kubevirt_pvc:
+      kubenetes.core:
         state: present
         kubeconfig: /root/.kube/kubeconfig.odscocne
         name: test-pvc-ans
