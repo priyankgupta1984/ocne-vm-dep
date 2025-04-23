@@ -18,11 +18,6 @@
           template:
             spec:
               domain:
-                description: "Simple Fedora VM"
-                cpu:
-                  cores: 2
-                memory:
-                  guest: 2048Mi
                 devices:
                   disks:
                     - name: containerdisk
@@ -31,6 +26,10 @@
                   interfaces:
                     - name: default
                       masquerade: {}
+                resources:
+                  requests:
+                    cpu: "1"
+                    memory: "2048Mi"
               networks:
                 - name: default
                   pod: {}
