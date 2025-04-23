@@ -3,29 +3,38 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3.11
   collections:
-#    - kubernetes.core
     - kubevirt.core
   tasks:
-    - name: Create virtual machine 'myvm' and start it
+    - name: Create virtual machine 'myvm-ansible' and start it
       kubevirt_vm:
         state: present
         name: myvm-ansible
         namespace: default
+        kubeconfig: /root/.kube/kubeconfig.odscocne
+        running: true
+        wait: true
+        wait_timeout: 300
         spec:
-          domain:
-            description: "testvm"
-            cpus: 1
-            memory: 2048
-          network:
-            devices:
-              - name: network1
-                type: bridge
-                bridge: "br0"
-        disks:
-          - name: containerdisk
-            volume:
-              containerDisk:
-                image: ghcr.io/priyankgupta1984/fedora-img/fedora:latest
-#                path: /custom-disk/cirros.img
-            disk:
-              bus: virtio
+          template:
+            spec:
+              domain:
+                description: "Simple Fedora VM"
+                cpu:
+                  cores: 2
+                memory:
+                  guest: 2048Mi
+                devices:
+                  disks:
+                    - name: containerdisk
+                      disk:
+                        bus: virtio
+                  interfaces:
+                    - name: default
+                      masquerade: {}
+              networks:
+                - name: default
+                  pod: {}
+              volumes:
+                - name: containerdisk
+                  containerDisk:
+                    image: ghcr.io/priyankgupta1984/fedora-img/fedora:latest
