@@ -14,8 +14,8 @@
         memory: 1Gi
         cpu_cores: 2
         bootloader: efi
-        smbios_uuid: 5d307ca9-b3ef-428c-8861-06e72d69f223
-        cpu_model: Conroe
+#        smbios_uuid: 5d307ca9-b3ef-428c-8861-06e72d69f223
+#        cpu_model: Conroe
         headless: false
         hugepage_size: 2Mi
         tablets:
@@ -25,7 +25,7 @@
           - name: containerdisk
             volume:
               containerDisk:
-                image: kubevirt/cirros-container-disk-demo:latest
-                path: /custom-disk/cirros.img
+                image: ghcr.io/priyankgupta1984/fedora-img/fedora:latest
+#                path: /custom-disk/cirros.img
             disk:
               bus: virtio
