@@ -8,7 +8,7 @@
   tasks:
     - name: Create virtual machine 'myvm' and start it
       kubevirt_vm:
-        state: running
+        state: present
         name: myvm-ansible
         namespace: default
         memory: 1Gi
