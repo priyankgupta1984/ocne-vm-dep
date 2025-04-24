@@ -15,13 +15,12 @@
         wait: true
         wait_timeout: 300
         spec:
+          runStrategy: Always
           template:
             spec:
               domain:
                 machine:
                   type: q35
-                firmware:
-                  uuid: "{{ 'myvm-ansible-' + ansible_date_time.iso8601 | to_uuid }}"
                 devices:
                   disks:
                     - name: containerdisk
@@ -30,6 +29,7 @@
                   interfaces:
                     - name: default
                       masquerade: {}
+                  rng: {}
                 resources:
                   requests:
                     cpu: "1"
