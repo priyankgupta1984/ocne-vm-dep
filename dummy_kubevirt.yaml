@@ -15,31 +15,38 @@
         wait: true
         wait_timeout: 300
         spec:
-          runStrategy: Always
+          running: true
           template:
             spec:
+              architecture: amd64
               domain:
-                machine:
-                  type: q35
-                cpu:
-                  cores: 1
-                memory:
-                  guest: "2048Mi"
                 devices:
                   disks:
-                    - name: containerdisk
-                      disk:
+                    - disk:
                         bus: virtio
+                      name: containerdisk
                   interfaces:
-                    - name: default
-                      masquerade: {}
+                    - masquerade: {}
+                      name: default
+                      ports:
+                        - port: 80
                 features:
-                  acpi:
+                  acpi: {}
+                  smm:
                     enabled: true
+                firmware:
+                  bootloader: {}
+                machine:
+                  type: q35
+                resources:
+                  requests:
+                    memory: 2048M
+              evictionStrategy: LiveMigrate
               networks:
                 - name: default
                   pod: {}
+              terminationGracePeriodSeconds: 30
               volumes:
-                - name: containerdisk
-                  containerDisk:
+                - containerDisk:
                     image: ghcr.io/priyankgupta1984/fedora-img/fedora:latest
+                  name: containerdisk
