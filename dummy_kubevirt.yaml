@@ -1,52 +1,47 @@
-- name: Create KubeVirt VM
-  hosts: 10.178.73.51
-  vars:
-    ansible_python_interpreter: /usr/bin/python3.11
-  collections:
-    - kubevirt.core
-  tasks:
-    - name: Create virtual machine 'myvm-ansible' and start it
-      kubevirt_vm:
-        state: present
-        name: myvm-ansible
-        namespace: default
-        kubeconfig: /root/.kube/kubeconfig.odscocne
-        running: true
-        wait: true
-        wait_timeout: 300
-        spec:
-          running: true
-          template:
-            spec:
-              architecture: amd64
-              domain:
-                devices:
-                  disks:
-                    - disk:
-                        bus: virtio
-                      name: containerdisk
-                  interfaces:
-                    - masquerade: {}
-                      name: default
-                      ports:
-                        - port: 80
-                features:
-                  acpi: {}
-                  smm:
-                    enabled: true
-                firmware:
-                  bootloader: {}
-                machine:
-                  type: q35
-                resources:
-                  requests:
-                    memory: 2048M
-              evictionStrategy: LiveMigrate
-              networks:
-                - name: default
-                  pod: {}
-              terminationGracePeriodSeconds: 30
-              volumes:
-                - containerDisk:
-                    image: ghcr.io/priyankgupta1984/fedora-img/fedora:latest
-                  name: containerdisk
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: myvm-ansible
+  namespace: default
+spec:
+  running: true
+  template:
+    spec:
+      architecture: amd64
+      domain:
+        devices:
+          disks:
+            - disk:
+                bus: virtio
+              name: containerdisk
+            - disk:
+                bus: virtio
+              name: pvcdisk
+          interfaces:
+            - masquerade: {}
+              name: default
+              ports:
+                - port: 80
+        features:
+          acpi: {}
+          smm:
+            enabled: true
+        firmware:
+          bootloader: {}
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 2048M
+      evictionStrategy: LiveMigrate
+      networks:
+        - name: default
+          pod: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - containerDisk:
+            image: ghcr.io/priyankgupta1984/fedora-img/fedora:latest
+          name: containerdisk
+        - name: pvcdisk
+          persistentVolumeClaim:
+            claimName: pvc-ansible
