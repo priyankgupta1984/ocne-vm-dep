@@ -21,6 +21,9 @@
               domain:
                 machine:
                   type: q35
+                features:
+                  acpi:
+                    enabled: true
                 devices:
                   disks:
                     - name: containerdisk
@@ -32,12 +35,12 @@
                   rng: {}
                 resources:
                   requests:
-                    cpu: "1"
-                    memory: "2048Mi"
+                    cpu: "500m"
+                    memory: "512Mi"
               networks:
                 - name: default
                   pod: {}
               volumes:
                 - name: containerdisk
                   containerDisk:
-                    image: ghcr.io/priyankgupta1984/fedora-img/fedora:latest
+                    image: quay.io/kubevirt/cirros-container-disk-demo
