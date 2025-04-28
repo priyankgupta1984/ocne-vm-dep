@@ -39,11 +39,12 @@
                   - containerDisk:
                       image: ghcr.io/priyankgupta1984/fedora-img/fedora:latest
                     name: containerdisk
-                    cloudInitNoCloud:
+                  - cloudInitNoCloud:
                       userData: |
                         #cloud-config
                         user: fedora
                         password: asdf@123
                         chpasswd: { expire: False }
                         ssh_pwauth: True
+                    name: cloudinitdisk    
         kubeconfig: /root/.kube/kubeconfig.odscocne
