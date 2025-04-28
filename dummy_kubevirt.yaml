@@ -7,7 +7,7 @@
   tasks:
     - name: Create virtual machine 'myvm-ansible' and start it
       k8s:
-        state: running
+        state: present
         definition:
           apiVersion: kubevirt.io/v1
           kind: VirtualMachine
@@ -18,8 +18,9 @@
             running: true
             template:
               spec:
-                architecture: amd64
                 domain:
+                  cpu:
+                    cores: 2
                   devices:
                     disks:
                       - disk:
@@ -28,24 +29,12 @@
                     interfaces:
                       - masquerade: {}
                         name: default
-                        ports:
-                          - port: 80
-                  features:
-                    acpi: {}
-                    smm:
-                      enabled: true
-                  firmware:
-                    bootloader: {}
-                  machine:
-                    type: q35
                   resources:
                     requests:
                       memory: 2048M
-                evictionStrategy: LiveMigrate
                 networks:
                   - name: default
                     pod: {}
-                terminationGracePeriodSeconds: 30
                 volumes:
                   - containerDisk:
                       image: ghcr.io/priyankgupta1984/fedora-img/fedora:latest
