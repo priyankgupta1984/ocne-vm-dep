@@ -7,7 +7,7 @@
   tasks:
     - name: Create virtual machine 'myvm-ansible' and start it
       k8s:
-        state: present
+        state: running
         definition:
           apiVersion: kubevirt.io/v1
           kind: VirtualMachine
